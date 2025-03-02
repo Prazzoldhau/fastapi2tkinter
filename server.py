@@ -3,7 +3,9 @@ from tkinter import ttk
 import requests
 
 # FastAPI endpoint
-API_URL = "http://127.0.0.1:8000"
+# API_URL = "http://127.0.0.1:8000"
+API_URL = "https://fastapi2tkinter-1.onrender.com"
+
 
 # Function to send data to FastAPI
 def send_data():
