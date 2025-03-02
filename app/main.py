@@ -47,3 +47,9 @@ def get_patients():
     data = cursor.fetchall()
     conn.close()
     return {"patients": data}
+
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to my FastAPI app!"}
+
