@@ -27,7 +27,7 @@ class Patient(BaseModel):
     age: int
     diagnosis: str
 
-# API to receive data from `server.py` and add patient
+# API to receive data from `server.py`
 @app.post("/add_patient")
 def add_patient(patient: Patient):
     conn = sqlite3.connect("database.db")
@@ -46,13 +46,25 @@ def get_patients():
     cursor.execute("SELECT * FROM patients")
     data = cursor.fetchall()
     conn.close()
+    return {"patients": data}
+
+
+# @app.get("/")
+# def read_root():
+#     return {"message": "Welcome to my FastAPI app!"}
+
+@app.get("/")
+def read_root():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM patients")
+    data = cursor.fetchall()
+    conn.close()
 
     # Convert the raw tuple data into a structured list of dictionaries
     patients_list = [{"id": patient[0], "name": patient[1], "age": patient[2], "diagnosis": patient[3]} for patient in data]
     
-    return {"patients": patients_list}
-
-# Root endpoint to verify the app is running
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to my FastAPI app!"}
+    return {
+        "message": "Welcome to my FastAPI app!",
+        "patients": patients_list
+    }
